@@ -7,6 +7,11 @@ let vidasEnemigo = 3;
 
 //* selecciona elementos del DOM despues de cargar la pagina
 function iniciarJuego () {
+    let seccionAtaques = document.getElementById('seleccionar-ataque');
+    seccionAtaques.style.display = 'none';
+    let seccionReiniciar = document.getElementById('reiniciar');
+    seccionReiniciar.style.display = 'none';
+
     let buttonMasconta = document.getElementById('button-mascota');
     buttonMasconta.addEventListener('click', seleccionarMascotaJugador);
 
@@ -18,12 +23,6 @@ function iniciarJuego () {
     buttonPlanta.addEventListener('click', ataquePlanta);
     let buttonReiniciar = document.getElementById('button-reiniciar');
     buttonReiniciar.addEventListener('click', () => {location.reload()});
-    let seccionAtaques = document.getElementById('seleccionar-ataque');
-    let seccionMensajes = document.getElementById('mensajes');
-    let seccionReiniciar = document.getElementById('reiniciar');
-    // seccionAtaques.style.display = 'none';
-    // seccionMensajes.style.display = 'none';
-    // seccionReiniciar.style.visibility = 'none';
 }
 
 
@@ -48,6 +47,11 @@ function ramdonMascota () {
 
 //* selecciona mascota del jugador segun checkbox seleccionado
 function seleccionarMascotaJugador () {
+    let seccionMascota = document.getElementById('seleccionar-mascota');
+    seccionMascota.style.display = 'none';
+
+    let seccionAtaques = document.getElementById('seleccionar-ataque');
+    seccionAtaques.style.display = 'block';
 
     let inputHipodoge     = document.getElementById('hipodoge');
     let inputCapipepo     = document.getElementById('capipepo');
@@ -143,6 +147,7 @@ function crearMensajeFinal (resultado) {
     let buttonAgua   = document.getElementById('button-agua');
     let buttonFuego  = document.getElementById('button-fuego');
     let buttonPlanta = document.getElementById('button-planta');
+    let seccionReiniciar = document.getElementById('reiniciar');
 
     let text = document.createElement('p');
     text.innerHTML = resultado;
@@ -151,6 +156,7 @@ function crearMensajeFinal (resultado) {
     buttonAgua.disabled   = true;
     buttonFuego.disabled  = true;
     buttonPlanta.disabled = true;
+    seccionReiniciar.style.display = 'block';
 }
 
 
