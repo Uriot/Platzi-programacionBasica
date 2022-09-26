@@ -1,0 +1,75 @@
+/* Selector de tipo input */
+/* h1 {
+    color: lightcoral;
+} */
+
+/* Selector de id */
+/* #titulo {
+    color: hotpink;
+} */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+body {
+    background-color: #242926;
+}
+
+h2 {
+    color: #add380;
+}
+*{
+    font-family: 'Press Start 2P', cursive;
+}
+/* Selector de clase */
+.titulo {
+    text-align: center;
+    font-size: 4em;
+    color: #4db266;
+    width: auto;
+    height: 100px;;
+}
+
+#seleccionar-mascota {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.tarjeta-de-mokepon {
+    width: 220px;
+    height: auto;
+    background: #e1dfa0;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.tarjeta-de-mokepon:hover {
+    background: #f2f2f2;
+}
+
+input {
+    display: none;
+}
+
+#button-mascota , #button-reiniciar {
+    background-color: #36544d;
+    border: 1px solid white;
+    color: white;
+    width: 200px;
+    height: 50px;
+}
+
+#button-mascota:hover,  #button-reiniciar:hover {
+    background-color: #4db266;
+    cursor: pointer;
+}
+
+
+
+p {
+    color: #add380;
+}
