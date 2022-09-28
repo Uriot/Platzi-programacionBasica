@@ -63,25 +63,31 @@ function seleccionarMascotaJugador () {
 
     let spanMascotaJugador   = document.getElementById('mascota-jugador');
     let inputMascotaEnemigo  = document.getElementById('mascota-enemigo');
+    let mascotaJugador = '';
 
     //* forma clase
     if (inputHipodoge.checked) {
-        spanMascotaJugador.innerHTML = 'Hipodoge';
+        mascotaJugador = 'Hipodoge';
     } else if (inputCapipepo.checked) {
-        spanMascotaJugador.innerHTML = 'Capipepo';
+        mascotaJugador = 'Capipepo';
     } else if (inputRatigueya.checked) {
-        spanMascotaJugador.innerHTML = 'Ratigueya';
+        mascotaJugador = 'Ratigueya';
     } else if (inputLangostelvis.checked) {
-        spanMascotaJugador.innerHTML = 'Langostelvis';
+        mascotaJugador = 'Langostelvis';
     } else if (inputTucapalma.checked) {
-        spanMascotaJugador.innerHTML = 'Tucapalma';
+        mascotaJugador = 'Tucapalma';
     } else if (inputPydos.checked) {
-        spanMascotaJugador.innerHTML = 'Pydos';
+        mascotaJugador = 'Pydos';
     } else {
+        location.reload();
         alert('no seleccionaste nada');
     }
+    spanMascotaJugador.innerHTML = mascotaJugador;
     buttonMasconta.disabled = true;
-    inputMascotaEnemigo.innerHTML = ramdonMascota();
+    randomMascota = ramdonMascota();
+    inputMascotaEnemigo.innerHTML = randomMascota;
+
+    insertarImagenMokepon(mascotaJugador, ramdonMascota);
 
     //!forma copilot
     // let selected = document.querySelector('input[name="mascota"]:checked');
@@ -104,15 +110,15 @@ function seleccionarMascotaJugador () {
 //* resulatdo del ataque del jugador vrs el ataque del enemigo
 function resultAtack() {
     if (ataqueJugador === 'fuego' && ataqueEnemigo === 'planta') {
-        resultado = ' ganaste 🎉';
+        resultado = ' ganaste este duelo 🎉';
     } else if (ataqueJugador === 'agua' && ataqueEnemigo === 'fuego') {
-        resultado = ' ganaste 🎉';
+        resultado = ' ganaste este duelo 🎉';
     } else if (ataqueJugador === 'planta' && ataqueEnemigo === 'agua') {
-        resultado = ' ganaste 🎉';
+        resultado = ' ganaste este duelo 🎉';
     } else if (ataqueJugador === ataqueEnemigo) {
-        resultado = ' es un empate 🤝';
+        resultado = ' empataste este duelo 🤝';
     } else {
-        resultado = ' perdiste 😭';
+        resultado = ' perdiste este duelo ☠';
     }
     mensajeResultado(resultado);
     calculoVidas(resultado);
@@ -120,17 +126,36 @@ function resultAtack() {
 
 //* mensaje de resultado del ataque
 function mensajeResultado(resultado) {
-    let text = document.createElement('p');
-    text.innerHTML = `Tu mokepon uso el ataque '${ataqueJugador}'  y el mokepon enemigo uso el ataque '${ataqueEnemigo}' por lo tanto ${resultado}`;
-    document.getElementById('mensajes').appendChild(text);
+    let mensaje        =  document.getElementById('resultado');
+    let ataquesJugador = document.getElementById('ataques-jugador');
+    let ataquesEnemigo = document.getElementById('ataques-enemigo');
+
+    let nuevoAtaqueJugador = document.createElement('p');
+    let nuevoAtaqueEnemigo = document.createElement('p');
+
+    mensaje.innerHTML            = resultado;
+    nuevoAtaqueJugador.innerHTML = ataqueJugador;
+    nuevoAtaqueEnemigo.innerHTML = ataqueEnemigo;
+
+    ataquesEnemigo.appendChild(nuevoAtaqueEnemigo);
+    ataquesJugador.appendChild(nuevoAtaqueJugador);
 }
+
+//* inserta imagen de mokepn
+function insertarImagenMokepon(mokeponJugador, mokeponEnemigo) {
+    let imagenMokeponJugador = document.getElementById('img-mokepon-jugador');
+    let test = document.getElementById('img-mokepon-enemigo');
+    console.log(test);
+    imagenMokeponJugador.src = `./assets/img/${mokeponJugador.toLowerCase()}.png`;
+}
+
 
 //* calcula las vidas del jugador y del enemigo y resultado del juego
 function calculoVidas (resultado) {
-    if (resultado === ' ganaste 🎉') {
+    if (resultado === ' ganaste este duelo 🎉') {
         vidasEnemigo--;
         document.getElementById('vidas-enemigo').innerHTML = vidasEnemigo;
-    } else if (resultado === ' perdiste 😭') {
+    } else if (resultado === ' perdiste este duelo ☠') {
         vidasJugador--;
         document.getElementById('vidas-jugador').innerHTML = vidasJugador;
     }
@@ -149,9 +174,7 @@ function crearMensajeFinal (resultado) {
     let buttonPlanta = document.getElementById('button-planta');
     let seccionReiniciar = document.getElementById('reiniciar');
 
-    let text = document.createElement('p');
-    text.innerHTML = resultado;
-    document.getElementById('mensajes').appendChild(text);
+    document.getElementById('resultado').innerHTML = resultado;
 
     buttonAgua.disabled   = true;
     buttonFuego.disabled  = true;

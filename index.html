@@ -29,24 +29,24 @@
             <input type="radio" name="mascota" id="ratigueya" />
             <label class="tarjeta-de-mokepon" for="ratigueya">
                 <p>Ratigueya</p>
-                <img src="./assets/img/ratigueya.png" alt="ratigueya.pn">
+                <img src="./assets/img/ratigueya.png" alt="ratigueya.png">
             </label>
 
             <input type="radio" name="mascota" id="langostelvis" />
             <label class="tarjeta-de-mokepon" for="langostelvis">
                 <p>Langostelvis</p>
-                <img src="" alt="">
+                <img src="./assets/img/langostelvis.png" alt="langostelvis.png">
             </label>
             <input type="radio" name="mascota" id="tucapalma" />
             <label class="tarjeta-de-mokepon" for="tucapalma">
                 <p>Tucapalma</p>
-                <img src="" alt="">
+                <img src="./assets/img/tucapalma.png" alt="tucapalma.png">
             </label>
 
             <input type="radio" name="mascota" id="pydos" />
             <label  class="tarjeta-de-mokepon" for="pydos">
                 <p>Pydos</p>
-                <img src="" alt="">
+                <img src="./assets/img/pydos.png" alt="pydos.png">
             </label>
         </div>
 
@@ -56,23 +56,36 @@
     <section id="seleccionar-ataque">
         <h1 class="titulo">MOKEPON! 🔥💧🌿</h1>
         <h2 class="subtitulo">Elige tu ataque:</h2>
-        <div>
+        <div class="contenedor-ataques">
             <button class="button-attaque" id="button-fuego" >Fuego 🔥</button>
             <button class="button-attaque" id="button-agua" >Agua 💧</button>
             <button class="button-attaque" id="button-planta">Planta 🌿</button>
         </div>
 
-        <div>
-            <section id="mensajes">
-            </section>
+        <div id="mensajes">
+            <p id="resultado"> Suerte </p>
 
             <section id="reiniciar">
                 <button id="button-reiniciar">Reiniciar</button>
             </section>
         </div>
-        <div>
-            <p> Tu <span id="mascota-jugador">mascota</span> tiene <span id="vidas-jugador">3</span> vidas</p>
-            <p> El <span id="mascota-enemigo">mascota</span> del enemigo tiene <span id="vidas-enemigo" >3</span> vidas</p>
+
+        <div class="ataques">
+            <div class="card-ataque-jugador">
+                <p >tu</p>
+                <p>vidas: <span id="vidas-jugador">3</span></p>
+                <p id="mascota-jugador">mascota</p>
+                <img id="img-mokepon-jugador" src="" alt="">
+                <div id="ataques-jugador"></div>
+            </div>
+            <div class="card-ataque-enemigo">
+                <p>enemigo</p>
+                <p id="vidas-enemigo" >3</span>
+                <p id="mascota-enemigo">mascota</span>
+                <img id="img-mokepon-enemigo" src="" alt="">
+
+                <div id="ataques-enemigo"></div>
+            </div>
         </div>
     </section>
 
