@@ -25,7 +25,10 @@ const contenedorAtaques = document.getElementById('contenedor-ataques');
 let mascontaEnemiga = '';
 let mokepones = [];
 let ataqueJugador = [];
-let ataqueEnemigo = '';
+let ataquesMokeponEnemigo;
+let ataqueEnemigo = [];
+let victoriasJugador = 0;
+let victoriasEnemigo = 0;
 let vidasJugador = 3;
 let vidasEnemigo = 3;
 let opcionDeMokepones;
@@ -39,6 +42,8 @@ let buttonFuego
 let buttonAgua
 let buttonPlanta
 let buttons = [];
+let indexAtaqueJugador;
+let indexAtaqueEnemigo;
 const buttonReiniciar  = document.getElementById('button-reiniciar');
 
 class Mokepon {
@@ -135,12 +140,7 @@ function iniciarJuego () {
     buttonReiniciar.addEventListener('click', () => {location.reload()});
 }
 
-//* forma mia para marcar el enemigo aleatorio
-function ramdonMascota () {
-    let mascotaRamdon = mokepones[aleatorio(0, mokepones.length -1)];
-    mascontaEnemiga = mascotaRamdon.nombre;
-    secuenciaAtaque();
-}
+
 
 //* selecciona mascota del jugador segun checkbox seleccionado
 function seleccionarMascotaJugador () {
@@ -183,20 +183,21 @@ function mostratAtaques (ataques) {
 function secuenciaAtaque() {
     buttons.forEach((button) => {
         button.addEventListener('click', (e) => {
-                if (e.target.textContent.includes('🔥')) {
-                    ataqueJugador.push('fuego');
-                    console.log(ataqueJugador);
-                    button.style.backgroundColor = '#112f58';
-                } else if (e.target.textContent.includes('💧')) {
-                    ataqueJugador.push('agua');
-                    console.log(ataqueJugador);
-                    button.style.backgroundColor = '#112f58';
-                } else {
-                    ataqueJugador.push('planta');
-                    console.log(ataqueJugador);
-                    button.style.backgroundColor = '#112f58';
-                }
-            })
+            if (e.target.textContent.includes('🔥')) {
+                ataqueJugador.push('fuego');
+                console.log(ataqueJugador);
+                button.style.backgroundColor = '#112f58';
+            } else if (e.target.textContent.includes('💧')) {
+                ataqueJugador.push('agua');
+                console.log(ataqueJugador);
+                button.style.backgroundColor = '#112f58';
+            } else {
+                ataqueJugador.push('planta');
+                console.log(ataqueJugador);
+                button.style.backgroundColor = '#112f58';
+            }
+            ramdonAtack();
+        })
     });
 }
 
@@ -205,28 +206,75 @@ function aleatorio(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
+//* forma mia para marcar el enemigo aleatorio
+function ramdonMascota () {
+    let mascotaRamdon = mokepones[aleatorio(0, mokepones.length -1)];
+    mascontaEnemiga = mascotaRamdon.nombre;
+    ataquesMokeponEnemigo = mascotaRamdon.ataques;
+    secuenciaAtaque();
+}
+
 //* genera ataque aleatorio de pc
 function ramdonAtack() {
-    let ataque = ['fuego', 'agua', 'planta'];
-    let ataqueRamdon = ataque[aleatorio(0, ataque.length)];
-    return ataqueRamdon;
+    let ataqueRamdon = ataquesMokeponEnemigo[aleatorio(0, ataquesMokeponEnemigo.length -1)].nombre;
+    if (ataqueRamdon.includes('🔥')) {
+        ataqueEnemigo.push('fuego')
+    } else if (ataqueRamdon.includes('💧')) {
+        ataqueEnemigo.push('agua');
+    } else {
+        ataqueEnemigo.push('planta');
+    }
+    console.log(ataqueEnemigo);
+    iniciarPelea();
+    // return ataqueRamdon[ataqueRamdon.length -1];
+}
+
+function iniciarPelea () {
+    if (ataqueJugador.length === 5) {
+        resultAtack();
+    }
+}
+
+function indexOponentes(jugador, enemigo) {
+    indexAtaqueJugador = ataqueJugador[jugador];
+    indexAtaqueEnemigo = ataqueEnemigo[enemigo];
 }
 
 //* resulatdo del ataque del jugador vrs el ataque del enemigo
 function resultAtack() {
-    if (ataqueJugador === 'fuego' && ataqueEnemigo === 'planta') {
-        resultado = ' ganaste este duelo 🎉';
-    } else if (ataqueJugador === 'agua' && ataqueEnemigo === 'fuego') {
-        resultado = ' ganaste este duelo 🎉';
-    } else if (ataqueJugador === 'planta' && ataqueEnemigo === 'agua') {
-        resultado = ' ganaste este duelo 🎉';
-    } else if (ataqueJugador === ataqueEnemigo) {
-        resultado = ' empataste este duelo 🤝';
-    } else {
-        resultado = ' perdiste este duelo ☠';
+
+    for (let i = 0; i < ataqueJugador.length; i++) {
+        debugger;
+        if (ataqueJugador[i] === ataqueEnemigo[i]) {
+            indexOponentes(i, i);
+            mensajeResultado(' empataste este duelo 🤝');
+        } else if (ataqueJugador[i] === 'fuego' && ataqueEnemigo[i] === 'planta') {
+            indexOponentes(i, i);
+            victoriasJugador++;
+            vidaJugador.innerHTML = victoriasJugador;
+            mensajeResultado(' ganaste este duelo 🏆');
+        } else if (ataqueJugador[i] === 'agua' && ataqueEnemigo[i] === 'fuego') {
+            indexOponentes(i, i);
+            victoriasJugador++;
+            vidaJugador.innerHTML = victoriasJugador;
+            mensajeResultado(' ganaste este duelo 🏆');
+        } else if (ataqueJugador[i] === 'planta' && ataqueEnemigo[i] === 'agua') {
+            indexOponentes(i, i);
+            victoriasJugador++;
+            vidaJugador.innerHTML = victoriasJugador;
+            mensajeResultado(' ganaste este duelo 🏆');
+        } else {
+            indexOponentes(i, i);
+            victoriasEnemigo++;
+            vidaEnemigo.innerHTML = victoriasEnemigo;
+            mensajeResultado(' perdiste este duelo 🏆');
+        }
     }
-    mensajeResultado(resultado);
-    calculoVidas(resultado);
+    revisarVictorias();
+}
+
+function revisarVictorias() {
+
 }
 
 //* mensaje de resultado del ataque
@@ -235,8 +283,8 @@ function mensajeResultado(resultado) {
     let nuevoAtaqueEnemigo = document.createElement('p');
 
     mensaje.innerHTML            = resultado;
-    nuevoAtaqueJugador.innerHTML = ataqueJugador;
-    nuevoAtaqueEnemigo.innerHTML = ataqueEnemigo;
+    nuevoAtaqueJugador.innerHTML = indexAtaqueJugador;
+    nuevoAtaqueEnemigo.innerHTML = indexAtaqueEnemigo;
 
     ataquesEnemigo.appendChild(nuevoAtaqueEnemigo);
     ataquesJugador.appendChild(nuevoAtaqueJugador);
@@ -248,23 +296,16 @@ function insertarImagenMokepon(mokeponJugador) {
     imagenMokeponEnemigo.src = `./assets/img/${mascontaEnemiga}.png`;
 }
 
-//* calcula las vidas del jugador y del enemigo y resultado del juego
-function calculoVidas (resultado) {
-    if (resultado === ' ganaste este duelo 🎉') {
-        vidasEnemigo--;
-        vidaJugador.innerHTML = vidasEnemigo;
-    } else if (resultado === ' perdiste este duelo ☠') {
-        vidasJugador--;
-        vidaEnemigo.innerHTML = vidasJugador;
-    }
-
-    //* si las vidas llegan a 0 se termina el juego
-    if (vidasEnemigo === 0) {
-        crearMensajeFinal('Felicitaciones ganaste el juego 🎉');
-    } else if (vidasJugador === 0) {
-        crearMensajeFinal('Lo sentimos perdiste el juego 😭');
+function revisarVictorias() {
+    if (victoriasJugador == victoriasEnemigo) {
+        crearMensajeFinal('Esto fue un Empate');
+    } else if (victoriasJugador > victoriasEnemigo) {
+        crearMensajeFinal('Ganaste la batalla');
+    } else {
+        crearMensajeFinal('Perdiste la batalla');
     }
 }
+
 
 function crearMensajeFinal (resultado) {
     mensajeFinal.innerHTML = resultado;
